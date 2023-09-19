@@ -17,6 +17,7 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
+    # stop function if message isn't a command prompt or is from the bot itself
     if message.content[0] != command_prefix or message.author.id == bot.user.id:
         return
 
@@ -51,6 +52,7 @@ COURSE MANAGEMENT COMMANDS
 !edit_course 'course' - edit details of the course
 !next - Show next course on schedule and how much time until then
                                 ''')
+    
     else: 
         await message.channel.send('Type !help to see the available commands')
 bot.run('MTE1MzUyNTMzNzY5OTkwOTY5Mg.GoyC-R.FShuoH5MVELSucNfuZ4i9bLo3tt_9P3DqmcT7A')
