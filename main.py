@@ -16,8 +16,9 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
+    print(message)
     if message.content[0] == '!':
-        # do stuff
+        await message.channel.send('it works')
 
 
-bot.run('MTA3MjAxOTQwMDMxNzczMDkxNw.G5g0No.a4tRzOb5NoMVMgKhcwgrSYXEFt6MnVhOCX1wQc')
+bot.run('MTE1MzUyNTMzNzY5OTkwOTY5Mg.GoyC-R.FShuoH5MVELSucNfuZ4i9bLo3tt_9P3DqmcT7A')
