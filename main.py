@@ -6,6 +6,12 @@ intents = discord.Intents.default()
 intents.members = True
 intents.message_content = True
 
+checklist_cmd = ['add', 'finish', 'remove', 'clear']
+assignment_cmd = []
+calendar_cmd = []
+note_cmd = []
+course_cmd = []
+
 bot = discord.Client(intents=intents)
 
 command_prefix = '!'
@@ -21,7 +27,8 @@ async def on_message(message):
     if message.content[0] != command_prefix or message.author.id == bot.user.id:
         return
 
-    command = message.content[1:].lower()
+    # get message content, lower all letters, isolate the first string before white space
+    command = message.content[1:].lower().split()[0]
     if command == 'help':
         await message.channel.send('''
                                    CALENDAR COMMANDS
@@ -52,7 +59,14 @@ COURSE MANAGEMENT COMMANDS
 !edit_course 'course' - edit details of the course
 !next - Show next course on schedule and how much time until then
                                 ''')
-    
+        return
+
+    elif command in checklist_cmd:
+        checklist_commands(message)
+
     else: 
         await message.channel.send('Type !help to see the available commands')
+        return
+    
+    checklist_commands(message)
 bot.run('MTE1MzUyNTMzNzY5OTkwOTY5Mg.GoyC-R.FShuoH5MVELSucNfuZ4i9bLo3tt_9P3DqmcT7A')
