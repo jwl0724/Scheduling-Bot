@@ -1,9 +1,19 @@
-async def checklist_commands(command):
+def checklist_commands(message):
     # shave ! off of message
-    command = command.content[1:]
+    command = message.content[1:].lower()
+    operation = command.split(' ')
 
-    """ # switch case for different commands
-    match command:
+    # switch case for different commands
+    match operation:
         case 'add':
-
-        case '' """
+            # add stuff to list
+            return
+        case 'finish': 
+            # strikethrough entry from list
+            return
+        case 'remove':
+            # remove entry from list
+            return
+        case 'clear':
+            # remove all entiries from list
+            return
