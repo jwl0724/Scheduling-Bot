@@ -1,12 +1,26 @@
 def checklist_commands(message):
     # shave ! off of message
     command = message.content[1:].lower()
-    operation = command.split(' ')
+    action = command.split(' ')[0]
+    
+    try:
+        operation = command.split(' ')[1]
+        if '#' in operation:
+            entry_num = int(operation[1:])
+
+    except IndexError:
+        pass
+    except ValueError:
+        await message.channel.send('Error, # must be followed with a number')
+
+    # csv file -> author,entry number,content
 
     # switch case for different commands
-    match operation:
+    match action:
         case 'add':
-            # add stuff to list
+            checklist = open('checklist.txt', 'w')
+            entry = checklist.write(message.content)
+
             return
         case 'finish': 
             # strikethrough entry from list
@@ -17,3 +31,5 @@ def checklist_commands(message):
         case 'clear':
             # remove all entiries from list
             return
+        case _:
+            await message.channel.send('Error, invalid usage. Please use !help to see proper usage')
