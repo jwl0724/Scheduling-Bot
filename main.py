@@ -41,7 +41,7 @@ ASSIGNMENTS COMMAND
 
 CHECKLIST COMMANDS
 !add 'task' - add tasks to a checklist  (ex. !add 'Do math homework')
-!finish #entry - crossess off checklist (ex. !finish #3)
+!finish #entry - crosses off checklist (ex. !finish #3)
 !remove #entry - remove entry from checklist
 !clear - remove all entries from checklist
                                    
