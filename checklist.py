@@ -11,7 +11,8 @@ def checklist_commands(message):
     except IndexError:
         pass
     except ValueError:
-        await message.channel.send('Error, # must be followed with a number')
+        message.channel.send('Error, # must be followed with a number')
+        return
 
     # csv file -> author,entry number,content
 
@@ -32,4 +33,5 @@ def checklist_commands(message):
             # remove all entiries from list
             return
         case _:
-            await message.channel.send('Error, invalid usage. Please use !help to see proper usage')
+            message.channel.send('Error, invalid usage. Please use !help to see proper usage')
+            return
