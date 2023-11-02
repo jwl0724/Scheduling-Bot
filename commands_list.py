@@ -1,0 +1,5 @@
+checklist_cmd = ['add', 'finish', 'remove', 'clear']
+assignment_cmd = []
+calendar_cmd = []
+note_cmd = []
+course_cmd = []
