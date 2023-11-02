@@ -1,17 +1,11 @@
 import discord
-from checklist import *
 from API_key import API_KEY
-from responses import *
+from checklist import *
+from static.responses import *
+from checklist import *
 
 intents = discord.Intents.default()
-intents.members = True
-intents.message_content = True
-
-checklist_cmd = ['add', 'finish', 'remove', 'clear']
-assignment_cmd = []
-calendar_cmd = []
-note_cmd = []
-course_cmd = []
+intents.members, intents.message_content = True, True
 
 bot = discord.Client(intents=intents)
 
@@ -26,15 +20,16 @@ async def on_ready():
 async def on_message(message):
     # stop function if message isn't a command prompt or is from the bot itself
     if message.content[0] != command_prefix or message.author.id == bot.user.id: return
-
-    # get message content, lower all letters, isolate the first string before white space
     command = message.content[1:].lower().split()[0]
+    
+    # process help command
     if command == 'help':
         await message.channel.send(help_response)
         return
 
+    # process commands under checklist
     elif command in checklist_cmd:
-        checklist_commands(message)
+        await checklist_commands(message)
 
     else: 
         await message.channel.send('Type !help to see the available commands')
