@@ -30,7 +30,7 @@ async def on_message(message):
             await message.channel.send(help_response)
 
         case command if command in CHECKLIST_CMD:
-            checklist_commands(message)
+            checklist_commands(message, command)
 
         case command if command in ASSIGNMENT_CMD:
             pass
