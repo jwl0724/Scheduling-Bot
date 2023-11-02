@@ -1,37 +1,28 @@
-def checklist_commands(message):
-    # shave ! off of message
-    command = message.content[1:].lower()
-    action = command.split(' ')[0]
-    
-    try:
-        operation = command.split(' ')[1]
-        if '#' in operation:
-            entry_num = int(operation[1:])
+import csv
 
-    except IndexError:
-        pass
-    except ValueError:
-        message.channel.send('Error, # must be followed with a number')
-        return
+def checklist_commands(message, command):
+    checklist_file = open('./storage/checklist.csv', 'r+', newline='')
+    checklist_data = csv.DictReader(checklist_file)
+    author_posts = [item for item in checklist_data if int(item['author']) == message.author.id]
 
-    # csv file -> author,entry number,content
-
-    # switch case for different commands
-    match action:
+    match command:
         case 'add':
-            checklist = open('checklist.txt', 'w')
-            entry = checklist.write(message.content)
+            pass
 
-            return
-        case 'finish': 
-            # strikethrough entry from list
-            return
+        case 'finish':
+            pass
+
         case 'remove':
-            # remove entry from list
-            return
+            pass
+
         case 'clear':
-            # remove all entiries from list
-            return
+            pass
+
+        case 'checklist':
+            pass
+
         case _:
             message.channel.send('Error, invalid usage. Please use !help to see proper usage')
-            return
+
+    checklist_file.close()
+    # csv file -> author,entry number,content
