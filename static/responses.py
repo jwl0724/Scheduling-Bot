@@ -12,6 +12,7 @@ CHECKLIST COMMANDS
 !finish #entry - crosses off checklist (ex. !finish #3)
 !remove #entry - remove entry from checklist
 !clear - remove all entries from checklist
+!checklist - displays checklist
                                    
 NOTE COMMANDS
 !note 'notes' - save notes to storage (ex. !note 'this is an example')                       
