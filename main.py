@@ -1,6 +1,6 @@
 import discord
 from checklist import *
-import json
+from API_key import API_KEY
 
 intents = discord.Intents.default()
 intents.members = True
@@ -69,4 +69,4 @@ COURSE MANAGEMENT COMMANDS
         return
     
     checklist_commands(message)
-bot.run('MTE1MzUyNTMzNzY5OTkwOTY5Mg.GoyC-R.FShuoH5MVELSucNfuZ4i9bLo3tt_9P3DqmcT7A')
+bot.run(API_KEY)
