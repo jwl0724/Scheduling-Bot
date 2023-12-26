@@ -1,6 +1,5 @@
 import csv
 import helpers as help
-import proper_usage
 import re
 
 
