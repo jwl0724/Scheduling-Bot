@@ -27,6 +27,7 @@ async def process_checklist_commands(message, command):
         case 'add':
             regex_eval = re.search("'.+'", message.content)
             if not regex_eval:
+                await message.channel.send('Invalid format, please wrap your task in single quotes')
                 return
             
             new_task = regex_eval.group()
