@@ -22,6 +22,20 @@ def retrieve_checklist(author_id):
     return tasks
 
 
+def clear_tasks(author_id):
+    with open('./storage/checklist.csv', 'r', newline='') as read_file:
+        file_reader = csv.DictReader(read_file, fieldnames=FIELDS)
+        file_data = list(file_reader)
+
+    with open('./storage/checklist.csv', 'w', newline='') as write_file:
+        file_writer = csv.DictWriter(write_file, fieldnames=FIELDS)
+
+        # rewrite lines that do not belong to the author
+        for line in file_data:
+            if int(line['author']) != author_id:
+                file_writer.writerow(line)
+
+
 async def process_checklist_commands(message, command):    
     match command:
         case 'add':
@@ -41,7 +55,8 @@ async def process_checklist_commands(message, command):
             pass
 
         case 'clear':
-            pass
+            clear_tasks(message.author.id)
+            await message.channel.send('All tasks cleared!')
 
         case 'checklist':
             tasks = retrieve_checklist(message.author.id)
@@ -54,5 +69,3 @@ async def process_checklist_commands(message, command):
                 formatted_string += f'{number}. {task}\n'
 
             await message.channel.send(formatted_string)
-
-
