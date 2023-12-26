@@ -1,25 +1,36 @@
 import csv
-import helpers
+import helpers as help
 import proper_usage
+import re
 
 
-async def checklist_commands(message, command):    
-    if not proper_usage.checklist(message.content, command):
-        await message.channel.send('Error, invalid usage. Please use !help to see proper usage')
-        return
-    
-    checklist_file = open('./storage/checklist.csv', 'r+', newline='')
-    checklist_data = csv.DictReader(checklist_file)
-    fields = ['author', 'content']
-    author_tasks = [item for item in checklist_data if int(item['author']) == message.author.id]
+FIELDS = ('author', 'content')
 
+def add_task(author_id, task):
+    cleaned_task = task.replace("'", '')
+    with open('./storage/checklist.csv', 'a', newline='') as file:
+        file_writer = csv.DictWriter(file, fieldnames=FIELDS)
+        entry = {'author': author_id, 'content': cleaned_task}
+        file_writer.__str__()
+        file_writer.writerow(entry)
+
+
+def retrieve_checklist(author_id):
+    with open('./storage/checklist.csv', 'r') as file:
+        file_reader = csv.DictReader(file, fieldnames=FIELDS)
+        tasks = [task['content'] for task in file_reader if int(task['author']) == author_id]
+    return tasks
+
+
+async def process_checklist_commands(message, command):    
     match command:
         case 'add':
-            new_task = {'author': message.author.id, 'content': message.content.split('\'')[1]}
-            writer = csv.DictWriter(checklist_file, fieldnames = fields)
-            writer.__str__()
-            writer.writerow(new_task)
-
+            regex_eval = re.search("'.+'", message.content)
+            if not regex_eval:
+                return
+            
+            new_task = regex_eval.group()
+            add_task(message.author.id, new_task)
             await message.channel.send('Task Added!')
 
         case 'finish':
@@ -32,14 +43,15 @@ async def checklist_commands(message, command):
             pass
 
         case 'checklist':
-            formatted_string, index = '', 0
+            tasks = retrieve_checklist(message.author.id)
+            if not tasks:
+                await message.channel.send('No tasks found.')
+                return
+            
+            formatted_string = ''
+            for number, task in enumerate(tasks, 1):
+                formatted_string += f'{number}. {task}\n'
 
-            for task in author_tasks:
-                index += 1
-                content = task['content']
-                formatted_string += f'{index}. {content}\n'
-                
             await message.channel.send(formatted_string)
 
-    checklist_file.close()
-    # csv file -> author,entry number,content
+
