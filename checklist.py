@@ -30,6 +30,17 @@ def get_task(author_id, entry_no):
         return None
 
 
+def finish_task(author_id, finished_task):  
+    with open('./storage/checklist.csv', 'a+', newline='') as file:
+        file.seek(0)
+        file_reader = csv.DictReader(file, fieldnames=FIELDS)
+        for line in file_reader:
+            if int(line['author']) == author_id and line['content'] == finished_task:
+                file.write(f'{author_id},~~{finished_task}~~')
+
+
+
+
 def clear_tasks(author_id):
     with open('./storage/checklist.csv', 'r', newline='') as read_file:
         file_reader = csv.DictReader(read_file, fieldnames=FIELDS)
@@ -49,7 +60,7 @@ async def process_checklist_commands(message, command):
         case 'add':
             regex_eval = re.search("!add '.+'", message.content)
             if not regex_eval:
-                await message.channel.send('Invalid format, please use !help to see correct format')
+                await message.channel.send('Invalid format, please wrap your task in single quotes.')
                 return
             
             new_task = re.search("'.+'", message.content).group()
@@ -57,7 +68,19 @@ async def process_checklist_commands(message, command):
             await message.channel.send('Task Added!')
 
         case 'finish':
-            pass
+            regex_eval = re.search('!finish #[0-9]+')
+            if not regex_eval:
+                await message.channel.send('Invalid format, please precede the entry number with #.')
+                return
+            
+            entry_no = re.search('[0-9]+', message.content).group()
+            finished_task = get_task(message.author.id, entry_no)
+            if not finished_task:
+                await message.channel.send('The entry number you put in doesn\'t exist, please put a valid number.')
+                return
+
+            finish_task(message.author.id, finished_task)
+            await message.channel.send('Tasked Crossed Out!')
 
         case 'remove':
             pass
