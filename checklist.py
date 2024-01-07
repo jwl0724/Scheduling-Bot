@@ -5,6 +5,7 @@ import re
 
 FIELDS = ('author', 'content')
 
+
 def add_task(author_id, task):
     cleaned_task = task.replace("'", '')
     with open('./storage/checklist.csv', 'a', newline='') as file:
@@ -19,6 +20,14 @@ def retrieve_checklist(author_id):
         file_reader = csv.DictReader(file, fieldnames=FIELDS)
         tasks = [task['content'] for task in file_reader if int(task['author']) == author_id]
     return tasks
+
+
+def get_task(author_id, entry_no):
+    task_list = retrieve_checklist(author_id)
+    try:
+        return task_list[entry_no - 1]
+    except IndexError:
+        return None
 
 
 def clear_tasks(author_id):
@@ -38,12 +47,12 @@ def clear_tasks(author_id):
 async def process_checklist_commands(message, command):    
     match command:
         case 'add':
-            regex_eval = re.search("'.+'", message.content)
+            regex_eval = re.search("!add '.+'", message.content)
             if not regex_eval:
-                await message.channel.send('Invalid format, please wrap your task in single quotes')
+                await message.channel.send('Invalid format, please use !help to see correct format')
                 return
             
-            new_task = regex_eval.group()
+            new_task = re.search("'.+'", message.content).group()
             add_task(message.author.id, new_task)
             await message.channel.send('Task Added!')
 
