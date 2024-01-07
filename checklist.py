@@ -18,8 +18,7 @@ def add_task(author_id, task):
 def retrieve_checklist(author_id):
     with open('./storage/checklist.csv', 'r') as file:
         file_reader = csv.DictReader(file, fieldnames=FIELDS)
-        tasks = [task['content'] for task in file_reader if int(task['author']) == author_id]
-    return tasks
+        return list(file_reader)
 
 
 def get_task(author_id, entry_no):
@@ -47,10 +46,6 @@ def edit_lines(author_id, specification=None, new_content=None):
                 file_writer.writerow(new_content) if new_content != None else None
 
 
-def finish_task(author_id, finished_task):  
-    
-
-
 async def process_checklist_commands(message, command):    
     match command:
         case 'add':
@@ -75,7 +70,8 @@ async def process_checklist_commands(message, command):
                 await message.channel.send('Error, please input a valid number.')
                 return
 
-            finish_task(message.author.id, finished_task)
+            finished_task['completion'] = True
+            edit_lines(message.author.id, specification=finished_task['content'], new_content=finished_task)
             await message.channel.send('Tasked Crossed Out!')
 
         case 'remove':
@@ -89,7 +85,7 @@ async def process_checklist_commands(message, command):
                 await message.channel.send('Error, please input a valid number.')
                 return
             
-            edit_lines(message.author.id, specification=to_remove)
+            edit_lines(message.author.id, specification=to_remove['content'])
 
         case 'clear':
             edit_lines(message.author.id)
@@ -103,6 +99,6 @@ async def process_checklist_commands(message, command):
             
             formatted_string = ''
             for number, task in enumerate(tasks, 1):
-                formatted_string += f'{number}. {task}\n'
+                formatted_string += f'{number}. {task["content"]}\n' if not eval(task['completion']) else f'~~{number}. {task["content"]}\n~~' 
 
             await message.channel.send(formatted_string)
