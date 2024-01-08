@@ -28,7 +28,6 @@ def main():
             
     @bot.event
     async def on_message(message):
-        print(message.channel.id)
         # ignore messages without command prefix
         if message.content[0] != command_prefix:
             return
