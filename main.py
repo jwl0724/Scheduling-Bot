@@ -1,5 +1,7 @@
-import discord
 from API_key import DISCORD_API_KEY as API
+from discord.ext import tasks
+from datetime import datetime
+import discord
 import checklist as chk
 import static.responses as resp
 import static.commands_list as cmd
@@ -12,14 +14,20 @@ def main():
     bot = discord.Client(intents=intents)
     command_prefix = '!'
 
-
     @bot.event
     async def on_ready():
         print(f'Logged in as {bot.user} (ID: {bot.user.id})')
 
-
+    @tasks.loop(hours=24)
+    async def check_date():
+        current_date = int(datetime.today().strftime('%d')) # returns current day
+        if current_date == 20:
+            reminder_channel = bot.get_channel(1193722212637736980)
+            await reminder_channel.send('Reminder to renew U-Pass!')
+            
     @bot.event
     async def on_message(message):
+        print(message.channel.id)
         # ignore messages without command prefix
         if message.content[0] != command_prefix:
             return
