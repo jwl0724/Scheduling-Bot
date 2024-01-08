@@ -17,6 +17,7 @@ CHECKLIST COMMANDS
 NOTE COMMANDS
 !upload [file] - upload a file to be saved (.txt file), replaces existing file if it already exists
 !notes - view all uploaded files
+!view #entry - send the notes into the chat as a message
 !pull #entry - get download link to the selected file
 !delete #entry - remove the selected file from storage
 
