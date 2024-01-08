@@ -11,6 +11,27 @@ def get_notes(author_id):
     return file_list
 
 
+def get_selected_file(author_id, entry_no):
+    notes_list = get_notes(author_id)
+    if not notes_list:
+        return None
+    try:
+        selected_note = notes_list[int(entry_no) - 1]
+    except IndexError:
+        return None
+    except TypeError:
+        return None
+    
+    return selected_note
+
+
+def read_notes(author_id, file_name):
+    file_path = get_file_path(author_id)
+    with open(os.path.join(file_path, f'{author_id}_{file_name}'), 'r') as file:
+        data = file.readlines()
+    return data
+
+
 def get_file_path(author_id):
     file_path = os.path.join(os.path.dirname(__file__), f'storage/{author_id}')
     if not os.path.exists(file_path):
@@ -53,12 +74,29 @@ async def process_notes_commands(message, command):
             
             formatted_string = ''
             for number, note in enumerate(notes_list, 1):
-                formatted_string += f'{number}, {note}\n'
+                formatted_string += f'{number}. {note}\n'
             await message.channel.send(formatted_string)
 
         case 'pull':
             pass
+
         case 'delete':
             pass
+
         case 'view':
-            pass
+            regex_eval = re.search('!view #[0-9]+', message.content)
+            if not regex_eval:
+                await message.channel.send('Invalid format, please see !help for proper usage')
+                return
+            file_name = get_selected_file(message.author.id, re.search('[0-9]+', message.content).group())
+            if not file_name:
+                await message.channel.send('Please input a valid entry number')
+                return
+            notes = read_notes(message.author.id, file_name)
+            formatted_string = f'**Reading from {file_name}**\n'.upper()
+            for note in notes:
+                formatted_string += f'{note}'
+            await message.channel.send(formatted_string)
+            
+
+            
