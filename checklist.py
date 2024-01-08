@@ -18,7 +18,8 @@ def add_task(author_id, task):
 def retrieve_checklist(author_id):
     with open('./storage/checklist.csv', 'r') as file:
         file_reader = csv.DictReader(file, fieldnames=FIELDS)
-        return list(file_reader)
+        tasks = [task for task in file_reader if int(task['author']) == author_id]
+    return tasks
 
 
 def get_task(author_id, entry_no):
@@ -42,8 +43,14 @@ def edit_lines(author_id, specification=None, new_content=None):
         for line in file_data:
             if int(line['author']) != author_id:
                 file_writer.writerow(line)
-            elif int(line['author']) == author_id and line['content'] == specification:
-                file_writer.writerow(new_content) if new_content != None else None
+                continue
+            
+            if line['content'] == specification:
+                if new_content:
+                    file_writer.writerow(new_content)
+                    
+            elif specification:
+                file_writer.writerow(line)
 
 
 async def process_checklist_commands(message, command):    
