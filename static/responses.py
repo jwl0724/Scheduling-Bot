@@ -20,11 +20,6 @@ NOTE COMMANDS
 !view #entry - send the notes into the chat as a message
 !pull #entry - get download link to the selected file
 !delete #entry - remove the selected file from storage
-
-!note 'notes' - save notes to storage (ex. !note 'this is an example')                       
-!erase #entry - remove the note at the entry number
-!wipe - erase all notes
-!edit - #entry - edit the note at the entry number
                                    
 COURSE MANAGEMENT COMMANDS
 !courses - list courses for the week
