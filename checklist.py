@@ -86,7 +86,7 @@ async def process_checklist_commands(message, command):
             if not regex_eval:
                 await message.channel.send('Invalid format, please precede the entry number with #.')
                 return
-            entry_no = re.search('[0-9]+', message.content)
+            entry_no = re.search('[0-9]+', message.content).group()
             to_remove = get_task(message.author.id, entry_no)
             if not to_remove:
                 await message.channel.send('Error, please input a valid number.')
