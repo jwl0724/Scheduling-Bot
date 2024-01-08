@@ -2,7 +2,8 @@ from API_key import DISCORD_API_KEY as API
 from discord.ext import tasks
 from datetime import datetime
 import discord
-import checklist as chk
+import checklist
+import notes
 import static.responses as resp
 import static.commands_list as cmd
 import helpers as help
@@ -39,7 +40,7 @@ def main():
                 await message.channel.send(resp.help_response)
 
             case command if command in cmd.CHECKLIST_CMD:
-                await chk.process_checklist_commands(message, command)
+                await checklist.process_checklist_commands(message, command)
 
             case command if command in cmd.ASSIGNMENT_CMD:
                 # await process_assignment_commands
