@@ -1,5 +1,4 @@
 import csv
-import helpers as help
 import re
 
 
