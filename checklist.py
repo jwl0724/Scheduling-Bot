@@ -48,7 +48,7 @@ def edit_lines(author_id, specification=None, new_content=None):
             if line['content'] == specification:
                 if new_content:
                     file_writer.writerow(new_content)
-                    
+
             elif specification:
                 file_writer.writerow(line)
 
@@ -106,6 +106,6 @@ async def process_checklist_commands(message, command):
             
             formatted_string = ''
             for number, task in enumerate(tasks, 1):
-                formatted_string += f'{number}. {task["content"]}\n' if not eval(task['completion']) else f'~~{number}. {task["content"]}\n~~' 
+                formatted_string += f'{number}. {task["content"]}\n' if not eval(task['completion']) else f'~~{number}. {task["content"]}~~\n' 
 
             await message.channel.send(formatted_string)
