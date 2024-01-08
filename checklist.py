@@ -93,6 +93,7 @@ async def process_checklist_commands(message, command):
                 return
             
             edit_lines(message.author.id, specification=to_remove['content'])
+            await message.channel.send('Task Removed!')
 
         case 'clear':
             edit_lines(message.author.id)
