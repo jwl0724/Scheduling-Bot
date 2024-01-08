@@ -51,8 +51,7 @@ def main():
                 pass
 
             case command if command in cmd.NOTES_CMD:
-                # await process_notes_commands
-                pass
+                await notes.process_notes_commands(message, command)
 
             case command if command in cmd.COURSE_CMD:
                 # await process_course_commands
