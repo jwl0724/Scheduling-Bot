@@ -15,11 +15,10 @@ CHECKLIST COMMANDS
 !checklist - displays checklist
                                    
 NOTE COMMANDS
-!upload [file] - upload a file to be saved (.txt file)
+!upload [file] - upload a file to be saved (.txt file), replaces existing file if it already exists
 !notes - view all uploaded files
 !pull #entry - get download link to the selected file
 !delete #entry - remove the selected file from storage
-!update #entry [file] - replace the selected file with new uploaded file
 
 !note 'notes' - save notes to storage (ex. !note 'this is an example')                       
 !erase #entry - remove the note at the entry number
