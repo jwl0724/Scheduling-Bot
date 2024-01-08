@@ -1,5 +1,5 @@
 CHECKLIST_CMD = ('add', 'finish', 'remove', 'clear', 'checklist')
 ASSIGNMENT_CMD = ()
 CALENDAR_CMD = ()
-NOTES_CMD = ('upload', 'notes', 'pull', 'delete', 'update')
+NOTES_CMD = ('upload', 'notes', 'pull', 'delete', 'view')
 COURSE_CMD = ()
