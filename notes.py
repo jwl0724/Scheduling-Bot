@@ -98,7 +98,7 @@ async def process_notes_commands(message, command):
             external_name = os.path.join(author_folder_path, f'{file_name}')
             os.rename(internal_name, external_name)
             selected_file = discord.File(external_name)
-            await message.channel.send(file=selected_file, content='{file_name} sent!')
+            await message.channel.send(file=selected_file, content=f'{file_name} sent!')
             selected_file.close()
             os.rename(external_name, internal_name)
 
