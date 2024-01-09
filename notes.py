@@ -1,6 +1,7 @@
 import re
 import requests
 import os
+import discord
 
 
 def get_notes(author_id):
@@ -84,7 +85,22 @@ async def process_notes_commands(message, command):
             await message.channel.send(formatted_string)
 
         case 'pull':
-            pass
+            regex_eval = re.search('!pull #[0-9]+', message.content)
+            if not regex_eval:
+                await message.channel.send('Invalid format, please see !help to see proper usage of pull')
+                return
+            file_name = get_selected_file(message.author.id, re.search('[0-9]+', message.content).group())
+            if not file_name:
+                await message.channel.send('Please input a valid entry number')
+                return
+            author_folder_path = get_file_path(message.author.id)
+            internal_name = os.path.join(author_folder_path, f'{message.author.id}_{file_name}')
+            external_name = os.path.join(author_folder_path, f'{file_name}')
+            os.rename(internal_name, external_name)
+            selected_file = discord.File(external_name)
+            await message.channel.send(file=selected_file, content='{file_name} sent!')
+            selected_file.close()
+            os.rename(external_name, internal_name)
 
         case 'delete':
             regex_eval = re.search('!delete #[0-9]+', message.content)
@@ -112,6 +128,3 @@ async def process_notes_commands(message, command):
             for note in notes:
                 formatted_string += f'{note}'
             await message.channel.send(formatted_string)
-            
-
-            
