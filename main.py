@@ -29,7 +29,7 @@ def main():
     @bot.event
     async def on_message(message):
         # ignore messages without command prefix
-        if message.content[0] != command_prefix:
+        if not message.content or message.content[0] != command_prefix:
             return
 
         command = help.get_command(message.content)
