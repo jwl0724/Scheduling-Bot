@@ -1,6 +1,7 @@
 from API_key import DISCORD_API_KEY as API
 from discord.ext import tasks
 from datetime import datetime
+import re
 import discord
 import checklist
 import notes
@@ -31,9 +32,13 @@ def main():
         # ignore messages without command prefix
         if not message.content or message.content[0] != command_prefix:
             return
-
-        command = help.get_command(message.content)
+        # ignore messages when only !
+        if len(message.content) == 1:
+            return
+        if not re.search('^![a-zA-Z]', message.content):
+            return 
         
+        command = help.get_command(message.content)
         match command:
             case 'help':
                 await message.channel.send(resp.help_response)
