@@ -50,6 +50,12 @@ def write_file(author_id, file_name, notes_url):
             file.write(note)
 
 
+def delete_file(author_id, file_name):
+    file_path = get_file_path(author_id)
+    joined_path = os.path.join(file_path, f'{author_id}_{file_name}')
+    os.remove(joined_path)
+
+
 async def process_notes_commands(message, command):
     match command:
         case 'upload':
@@ -69,7 +75,7 @@ async def process_notes_commands(message, command):
         case 'notes':
             notes_list = get_notes(message.author.id)
             if not notes_list:
-                await message.channel.send('No notes file found.')
+                await message.channel.send('No note files found.')
                 return
             
             formatted_string = ''
@@ -81,12 +87,21 @@ async def process_notes_commands(message, command):
             pass
 
         case 'delete':
-            pass
+            regex_eval = re.search('!delete #[0-9]+', message.content)
+            if not regex_eval:
+                await message.channel.send('Invalid format, please see !help to see proper usage of delete')
+                return
+            file_name = get_selected_file(message.author.id, re.search('[0-9]+', message.content).group())
+            if not file_name:
+                await message.channel.send('Please input a valid entry number')
+                return
+            delete_file(message.author.id, file_name)
+            await message.channel.send('File successfully removed from storage!')
 
         case 'view':
             regex_eval = re.search('!view #[0-9]+', message.content)
             if not regex_eval:
-                await message.channel.send('Invalid format, please see !help for proper usage')
+                await message.channel.send('Invalid format, please see !help for proper usage of view')
                 return
             file_name = get_selected_file(message.author.id, re.search('[0-9]+', message.content).group())
             if not file_name:
