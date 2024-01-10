@@ -6,6 +6,7 @@ import discord
 import checklist
 import notes
 import pomodoro
+import courses
 import calendar_commands as cal
 import static.responses as resp
 import static.commands_list as cmd
@@ -59,8 +60,7 @@ def main():
                 await notes.process_notes_commands(message, command)
 
             case command if command in cmd.COURSE_CMD:
-                # await process_course_commands
-                pass
+                await courses.process_course_commands(message, command)
 
             case command if command in cmd.POMODORO_CMD:
                 # await pomodoro.start_timer(message, command)
