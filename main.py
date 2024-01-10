@@ -63,7 +63,8 @@ def main():
                 pass
 
             case command if command in cmd.POMODORO_CMD:
-                await pomodoro.process_timer_commands(message, command)
+                # await pomodoro.start_timer(message, command)
+                pass
 
             case _:
                 await message.channel.send('Invalid command, type !help to see the available commands')
