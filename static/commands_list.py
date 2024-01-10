@@ -1,6 +1,6 @@
 CHECKLIST_CMD = ('add', 'finish', 'remove', 'clear', 'checklist')
 ASSIGNMENT_CMD = ()
-CALENDAR_CMD = ()
+CALENDAR_CMD = ('calendar', 'today')
 NOTES_CMD = ('upload', 'notes', 'pull', 'delete', 'view')
 COURSE_CMD = ()
 POMODORO_CMD = ('timer', 'restart', 'pause')
