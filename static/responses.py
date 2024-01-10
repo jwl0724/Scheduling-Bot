@@ -2,6 +2,7 @@ help_response = '''
 CALENDAR COMMANDS
 !calendar - see visual calendar
 !today - get today's date
+!month month - show calendar of the month
 
 ASSIGNMENTS COMMAND
 !save month/day 'assignment' (ex. !save 09/27 'midterm')
