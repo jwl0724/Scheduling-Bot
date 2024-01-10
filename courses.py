@@ -31,6 +31,7 @@ async def process_course_commands(message, command):
                 await message.channel.send('Please upload an image file')
                 return
             save_image(message.author.id, message.attachments[0].url, message.attachments[0].content_type)
+            await message.channel.send('Image has been received and saved!')
             
         case 'courses':
             pass
