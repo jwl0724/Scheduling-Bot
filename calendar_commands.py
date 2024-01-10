@@ -36,4 +36,4 @@ async def process_calendar_commands(message, command):
             if not month:
                 await message.channel.send('The month you inputted was not found')
                 return
-            await message.channel.send(f'{calendar.month(current_year, month)}')
+            await message.channel.send(f'```\n{calendar.month(current_year, month)}\n```')
