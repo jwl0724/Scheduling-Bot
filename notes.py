@@ -34,7 +34,7 @@ def read_notes(author_id, file_name):
 
 
 def get_file_path(author_id):
-    file_path = os.path.join(os.path.dirname(__file__), f'storage/{author_id}')
+    file_path = os.path.join(os.path.dirname(__file__), f'storage/{author_id}/notes')
     if not os.path.exists(file_path):
         os.makedirs(file_path)
     return file_path
