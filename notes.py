@@ -2,10 +2,11 @@ import re
 import requests
 import os
 import discord
+import helpers as help
 
 
 def get_notes(author_id):
-    file_path = get_file_path(author_id)
+    file_path = help.get_file_path(author_id, 'notes')
     if not len(os.listdir(file_path)):
         return None
     file_list = [file.replace(f'{author_id}_', '') for file in os.listdir(file_path)]
@@ -27,21 +28,14 @@ def get_selected_file(author_id, entry_no):
 
 
 def read_notes(author_id, file_name):
-    file_path = get_file_path(author_id)
+    file_path = help.get_file_path(author_id, 'notes')
     with open(os.path.join(file_path, f'{author_id}_{file_name}'), 'r') as file:
         data = file.readlines()
     return data
 
 
-def get_file_path(author_id):
-    file_path = os.path.join(os.path.dirname(__file__), f'storage/{author_id}/notes')
-    if not os.path.exists(file_path):
-        os.makedirs(file_path)
-    return file_path
-
-
 def write_file(author_id, file_name, notes_url):
-    file_path = get_file_path(author_id)
+    file_path = help.get_file_path(author_id, 'notes')
     response = requests.get(notes_url)
     joined_path = os.path.join(file_path, f'{author_id}_{file_name}')
     with open(joined_path, 'w') as file:
@@ -52,7 +46,7 @@ def write_file(author_id, file_name, notes_url):
 
 
 def delete_file(author_id, file_name):
-    file_path = get_file_path(author_id)
+    file_path = help.get_file_path(author_id, 'notes')
     joined_path = os.path.join(file_path, f'{author_id}_{file_name}')
     os.remove(joined_path)
 
@@ -93,7 +87,7 @@ async def process_notes_commands(message, command):
             if not file_name:
                 await message.channel.send('Please input a valid entry number')
                 return
-            author_folder_path = get_file_path(message.author.id)
+            author_folder_path = help.get_file_path(message.author.id)
             internal_name = os.path.join(author_folder_path, f'{message.author.id}_{file_name}')
             external_name = os.path.join(author_folder_path, f'{file_name}')
             os.rename(internal_name, external_name)
