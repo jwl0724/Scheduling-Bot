@@ -6,6 +6,7 @@ import discord
 import checklist
 import notes
 import pomodoro
+import calendar_commands as cal
 import static.responses as resp
 import static.commands_list as cmd
 import helpers as help
@@ -52,7 +53,7 @@ def main():
                 pass
 
             case command if command in cmd.CALENDAR_CMD:
-                # await process_calendar_commands
+                await cal.process_calendar_commands(message, command)
                 pass
 
             case command if command in cmd.NOTES_CMD:
