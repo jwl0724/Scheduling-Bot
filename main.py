@@ -54,7 +54,6 @@ def main():
 
             case command if command in cmd.CALENDAR_CMD:
                 await cal.process_calendar_commands(message, command)
-                pass
 
             case command if command in cmd.NOTES_CMD:
                 await notes.process_notes_commands(message, command)
