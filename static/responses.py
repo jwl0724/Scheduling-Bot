@@ -1,6 +1,6 @@
 help_response = '''
 CALENDAR COMMANDS
-!calendar - see visual calendar
+!calendar - see the calendar for current month
 !today - get today's date
 !month month - show calendar of the month
 
