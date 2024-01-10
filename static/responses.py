@@ -24,12 +24,8 @@ NOTE COMMANDS
 !delete #entry - remove the selected file from storage
                                    
 COURSE MANAGEMENT COMMANDS
-!courses - list courses for the week
-!add_course 'course' - add course to list (ex. !add_course 'COMP 1510')
-!remove_course 'course' - remove course from list
-!wipe_courses - remove all courses from list
-!edit_course 'course' - edit details of the course
-!next - Show next course on schedule and how much time until then
+!schedule [file] 
+!courses
 
 POMODORO (TIMER) COMMANDS
 !timer #time - start a timer based on the entered number in minutes, defaults to 25 minutes
