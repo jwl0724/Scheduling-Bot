@@ -28,4 +28,9 @@ COURSE MANAGEMENT COMMANDS
 !wipe_courses - remove all courses from list
 !edit_course 'course' - edit details of the course
 !next - Show next course on schedule and how much time until then
+
+POMODORO (TIMER) COMMANDS
+!timer #time - start a timer based on the entered number in minutes, defaults to 25 minutes
+!restart - restarts the timer back to the original duration
+!pause - pauses the timer
 '''
