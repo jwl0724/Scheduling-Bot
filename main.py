@@ -5,6 +5,7 @@ import re
 import discord
 import checklist
 import notes
+import pomodoro
 import static.responses as resp
 import static.commands_list as cmd
 import helpers as help
@@ -60,6 +61,9 @@ def main():
             case command if command in cmd.COURSE_CMD:
                 # await process_course_commands
                 pass
+
+            case command if command in cmd.POMODORO_CMD:
+                await pomodoro.process_timer_commands(message, command)
 
             case _:
                 await message.channel.send('Invalid command, type !help to see the available commands')
