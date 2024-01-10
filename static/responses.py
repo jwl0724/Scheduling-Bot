@@ -24,9 +24,9 @@ NOTE COMMANDS
 !delete #entry - remove the selected file from storage
                                    
 COURSE MANAGEMENT COMMANDS
-!schedule [file] - Upload an image of your schedule
+!schedule [file] - Upload/update your course schedule
 !courses - Show your schedule, if a schedule exists
-!update [file] - Reupload an image of your schedule, if no image attached then delete your old schedule
+!drop - delete schedule image from storage
 
 POMODORO (TIMER) COMMANDS
 !timer #time - start a timer based on the entered number in minutes, defaults to 25 minutes
