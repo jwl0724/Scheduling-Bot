@@ -1,6 +1,12 @@
 import asyncio
+import re
+
 from discord.ext import tasks
 import discord
+
+DEFAULT_TIMER_MINUTES = 25
+is_timer_paused = False
+paused_timer_seconds = 0
 
 
 async def start_timer(message, command):
@@ -11,13 +17,28 @@ async def start_timer(message, command):
     1500 seconds % 60 = 60 seconds
     '''
     # default timer is 25 min * 60 seconds = 1500 seconds
-    default_timer_minutes = 25
-    default_timer_seconds = default_timer_minutes * 60
+    global is_timer_paused, paused_timer_seconds
+    default_timer_seconds = DEFAULT_TIMER_MINUTES * 60
     while default_timer_seconds != 0:
-        default_timer_seconds -= 1
-        await message.channel.send(f"Timer: {int(default_timer_seconds / 60)}: {default_timer_seconds % 60}")
+        await message.channel.send(f"Timer: {default_timer_seconds // 60}: {default_timer_seconds % 60:02d}")
         await asyncio.sleep(1)
+        default_timer_seconds -= 1
+        if is_timer_paused:
+            paused_timer_seconds = default_timer_seconds
+            await asyncio.sleep(1)
     await message.channel.send(content="DONE")
+
+
+def restart_timer():
+    return DEFAULT_TIMER_MINUTES
+
+def pause_timer():
+    global is_timer_paused
+    is_timer_paused = True
+
+def resume_timer():
+    global is_timer_paused
+    is_timer_paused = False
 
 
 async def process_timer_commands(message, command):
@@ -25,8 +46,16 @@ async def process_timer_commands(message, command):
         case 'timer':
             await start_timer(message, command)
         case 'restart':
-            pass
+            await message.channel.send(f"Timer Restarted @ {DEFAULT_TIMER_MINUTES} minutes ")
+            await start_timer(message, command)
+
         case 'pause':
-            pass
+            pause_timer()
+            await message.channel.send(f"Timer paused @ {paused_timer_seconds // 60}:{paused_timer_seconds % 60:02d}")
+
+        case 'resume':
+            resume_timer()
+            await message.channel.send(f"Timer resumed@ {paused_timer_seconds // 60}:{paused_timer_seconds % 60:02d}")
+
         case 'stop':
             pass
