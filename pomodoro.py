@@ -11,12 +11,11 @@ async def start_timer(message, command):
     1500 seconds % 60 = 60 seconds
     '''
     # default timer is 25 min * 60 seconds = 1500 seconds
-    default_timer_minutes = 25 * 60
-    default_timer_seconds = default_timer_minutes % 60
-    while default_timer_minutes != 0:
+    default_timer_minutes = 25
+    default_timer_seconds = default_timer_minutes * 60
+    while default_timer_seconds != 0:
         default_timer_seconds -= 1
-        default_timer_minutes -= 1
-        await message.channel.send(f"Timer: {int(default_timer_minutes / 60)}: {default_timer_seconds}")
+        await message.channel.send(f"Timer: {int(default_timer_seconds / 60)}: {default_timer_seconds % 60}")
         await asyncio.sleep(1)
     await message.channel.send(content="DONE")
 
