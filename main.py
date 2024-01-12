@@ -63,9 +63,7 @@ def main():
                 await courses.process_course_commands(message, command)
 
             case command if command in cmd.POMODORO_CMD:
-                # await pomodoro.start_timer(message, command)
-                pass
-
+                await pomodoro.start_timer(message, command)
             case _:
                 await message.channel.send('Invalid command, type !help to see the available commands')
 
