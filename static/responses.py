@@ -7,7 +7,7 @@ CALENDAR COMMANDS
 ASSIGNMENTS COMMAND
 !save month/day 'assignment' (ex. !save 09/27 'midterm')
 !assignments - display lists of assignments due 
-!delete 'assignment' - remove assignment from calendar
+!delete #entry - remove assignment from calendar
 
 CHECKLIST COMMANDS
 !add 'task' - add tasks to a checklist  (ex. !add 'Do math homework')
