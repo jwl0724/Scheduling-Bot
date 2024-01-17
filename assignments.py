@@ -25,7 +25,7 @@ def save_assignment(author_id, deadline, assignment):
 
 
 def delete_assignment(author_id, entry_no):
-    helpers.get_file_path
+    pass
 
 
 async def process_assignment_commands(message, command):
