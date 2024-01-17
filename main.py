@@ -7,6 +7,7 @@ import checklist
 import notes
 import pomodoro
 import courses
+import assignments
 import calendar_commands as cal
 import static.responses as resp
 import static.commands_list as cmd
@@ -50,8 +51,7 @@ def main():
                 await checklist.process_checklist_commands(message, command)
 
             case command if command in cmd.ASSIGNMENT_CMD:
-                # await process_assignment_commands
-                pass
+                await assignments.process_assignment_commands(message, command)
 
             case command if command in cmd.CALENDAR_CMD:
                 await cal.process_calendar_commands(message, command)
